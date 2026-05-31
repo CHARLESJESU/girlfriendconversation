@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maya - English Coach Girlfriend</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Background decorative elements -->
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+
+        <!-- 1. SETUP / LOGIN SCREEN -->
+        <div id="setup-screen" class="screen active">
+            <div class="glass-card welcome-card">
+                <div class="brand">
+                    <span class="brand-emoji">💢</span>
+                    <h1>Maya</h1>
+                    <p class="tagline">Girlfriend English Coach</p>
+                </div>
+
+                <div class="description-box">
+                    <p>Practice your conversational English by responding to your dramatically frustrated girlfriend. She will correct your grammar in real-time!</p>
+                </div>
+
+                <div class="instructions-card">
+                    <h3>💡 How it works:</h3>
+                    <ul>
+                        <li><i class="fa-solid fa-microphone"></i> Maya speaks to you via voice. Speak back through your microphone.</li>
+                        <li><i class="fa-solid fa-bolt"></i> She gets annoyed easily! Form excuses and apologize.</li>
+                        <li><i class="fa-solid fa-graduation-cap"></i> She will correct your grammar errors on-screen.</li>
+                    </ul>
+                </div>
+
+                <!-- API Key configuration for static deployment -->
+                <div id="api-key-config" class="config-input-box hidden">
+                    <label for="api-key-field"><i class="fa-solid fa-key"></i> Gemini API Key</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="api-key-field" placeholder="Paste your Gemini API Key here...">
+                        <button id="btn-save-key" class="btn btn-secondary" title="Save API Key"><i class="fa-solid fa-check"></i></button>
+                    </div>
+                    <p class="key-help-text">Get a free key from <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>. Saved only on your browser.</p>
+                </div>
+
+                <button id="btn-start" class="btn btn-primary btn-glow">
+                    <i class="fa-solid fa-phone"></i> Start Call with Maya
+                </button>
+                <p class="mic-note">Requires microphone access</p>
+            </div>
+        </div>
+
+        <!-- 2. CALL SCREEN -->
+        <div id="call-screen" class="screen">
+            <!-- Header Status -->
+            <header class="call-header">
+                <div class="status-indicator">
+                    <span id="connection-dot" class="dot"></span>
+                    <span id="call-status">Connecting to Maya...</span>
+                </div>
+                <div class="scenario-badge">
+                    <i class="fa-solid fa-list-check"></i> <span id="current-scenario-name">Scenario 1: Beach Meeting</span>
+                </div>
+            </header>
+
+            <!-- Main Interactive Container -->
+            <div class="main-layout">
+                <!-- Left: Calling Area -->
+                <div class="call-stage-card glass-card">
+                    <!-- Maya Avatar Area -->
+                    <div class="avatar-container">
+                        <div class="avatar-ring-outer"></div>
+                        <div class="avatar-ring-middle"></div>
+                        <div class="avatar-ring-inner"></div>
+                        <div class="avatar-box">
+                            <span id="maya-emoji" class="avatar-emoji">😡</span>
+                        </div>
+                    </div>
+
+                    <!-- Visualizer -->
+                    <div class="visualizer-wrapper">
+                        <div class="voice-label">Maya's Voice</div>
+                        <div class="visualizer-container">
+                            <canvas id="audio-visualizer"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Scenario details quick view -->
+                    <div class="scenario-prompt-box">
+                        <div id="scenario-prompt-text">Maya is thinking of something to complain about...</div>
+                    </div>
+                </div>
+
+                <!-- Right: Coaching Dashboard & Transcripts -->
+                <div class="dashboard-card glass-card">
+                    <div class="dashboard-header">
+                        <h2><i class="fa-solid fa-chalkboard-user"></i> Live Coach Feedback</h2>
+                    </div>
+                    
+                    <div class="transcript-scroll-area" id="transcript-container">
+                        <!-- Message items will be dynamically added here -->
+                        <div class="system-message">
+                            Waiting for connection to start practice...
+                        </div>
+                    </div>
+
+                    <!-- Realtime Coach Corrections Alert -->
+                    <div id="coach-tip-panel" class="coach-tip-box hidden">
+                        <div class="coach-tip-header">
+                            <i class="fa-solid fa-lightbulb"></i>
+                            <span>Maya's Grammar Correction</span>
+                        </div>
+                        <div id="coach-tip-content" class="coach-tip-body">
+                            <!-- Live correction tips will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call Controls Footer -->
+            <footer class="call-controls">
+                <div class="controls-group">
+                    <button id="btn-mute" class="btn btn-circle" title="Mute Microphone">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+                    <span class="btn-label">Mute</span>
+                </div>
+
+                <div class="controls-group">
+                    <button id="btn-help" class="btn btn-circle btn-secondary" title="Get Sentence Starters">
+                        <i class="fa-solid fa-hand-holding-hand"></i>
+                    </button>
+                    <span class="btn-label">Get Help</span>
+                </div>
+
+                <div class="controls-group">
+                    <button id="btn-skip" class="btn btn-circle btn-secondary" title="Change Scenario">
+                        <i class="fa-solid fa-forward"></i>
+                    </button>
+                    <span class="btn-label">Skip Scenario</span>
+                </div>
+
+                <div class="controls-group">
+                    <button id="btn-hangup" class="btn btn-circle btn-danger" title="End Call">
+                        <i class="fa-solid fa-phone-slash"></i>
+                    </button>
+                    <span class="btn-label">End Call</span>
+                </div>
+            </footer>
+        </div>
+
+        <!-- 3. SUMMARY SCREEN -->
+        <div id="summary-screen" class="screen">
+            <div class="glass-card summary-card animate-pop">
+                <h2>📞 Call Ended</h2>
+                <p class="summary-subtitle">Here is how you did with Maya today:</p>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-val" id="stat-turns">0</div>
+                        <div class="stat-lbl">Conversation Turns</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-val" id="stat-corrections">0</div>
+                        <div class="stat-lbl">Grammar Corrections</div>
+                    </div>
+                </div>
+
+                <div class="corrections-review-box">
+                    <h3>✍️ Corrections Recap:</h3>
+                    <div id="corrections-list" class="corrections-list-container">
+                        <!-- Summary list of corrections -->
+                        <p class="no-corrections">Perfect! Maya didn't have to correct your grammar once.</p>
+                    </div>
+                </div>
+
+                <button id="btn-restart" class="btn btn-primary btn-glow">
+                    <i class="fa-solid fa-rotate-right"></i> Practice Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JavaScript App -->
+    <script src="app.js"></script>
+</body>
+</html>

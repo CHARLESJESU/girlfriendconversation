@@ -1,0 +1,11 @@
+# Maya Girlfriend English Coach - Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core Gemini AI SDK
+google-generativeai>=0.8.0
+
+# For voice mode (Step 2 - Flutter integration)
+# Uncomment these when adding voice support:
+# pyaudio>=0.2.14
+# sounddevice>=0.4.6
+# numpy>=1.24.0

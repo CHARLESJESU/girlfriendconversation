@@ -1,0 +1,22 @@
+{
+  "summary": {
+    "session_start": "2026-05-30T18:45:51.746496",
+    "session_end": "2026-05-30T18:46:02.253740",
+    "total_turns": 2,
+    "user_turns": 1,
+    "grammar_corrections": 0,
+    "corrections_detail": []
+  },
+  "conversation": [
+    {
+      "timestamp": "2026-05-30T18:46:02.251912",
+      "speaker": "user",
+      "message": "quit"
+    },
+    {
+      "timestamp": "2026-05-30T18:46:02.253719",
+      "speaker": "maya",
+      "message": "Fine! Go! You never have time for me anyway! Goodbye!"
+    }
+  ]
+}
