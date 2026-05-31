@@ -16,7 +16,7 @@ from core.config import GEMINI_API_KEY, GEMINI_MODEL, MAYA_VOICE
 from prompts.maya_system_prompt import MAYA_SYSTEM_PROMPT
 
 PORT = 8000
-DIRECTORY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "web")
+DIRECTORY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs")
 
 class MayaWebServer(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
